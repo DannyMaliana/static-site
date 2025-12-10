@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
+    <title>{{ title }} - Dan's Test Site</title>
     <meta name="description" content="{{ description }}">
     <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -17,7 +17,7 @@
                 <ul>
                     <li><a href="/">Home</a></li>
                     <li><a href="/about.html">About</a></li>
-                    <li><a href="/blog/">Blog</a></li>
+                    <li><a href="/blog/" class="active">Blog</a></li>
                     <li><a href="/faq.html">FAQ</a></li>
                     <li><a href="/contact.html">Contact Us</a></li>
                 </ul>
@@ -26,7 +26,16 @@
     </header>
 
     <main class="container">
-        {{ content }}
+        <a href="/blog/" style="display: inline-block; margin-bottom: 2rem; color: hsl(var(--accent-primary));">&larr;
+            Back to Blog</a>
+
+        <article>
+            <h1>{{ title }}</h1>
+            <p style="color: hsl(var(--text-secondary)); font-size: 0.9rem; margin-bottom: 2rem;">Published on {{ date
+                }}</p>
+
+            {{ content }}
+        </article>
     </main>
 
     <footer>

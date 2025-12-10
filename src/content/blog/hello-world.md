@@ -1,10 +1,10 @@
 ---
 title: Hello World
 description: Our first blog post.
-date: 2025-12-10
+date: 2025-12-09
 ---
 
-# Hello World
+
 
 This is our first blog post! We are excited to share our journey with you.
 
