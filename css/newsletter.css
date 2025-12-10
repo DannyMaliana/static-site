@@ -1,0 +1,71 @@
+/* Newsletter Box */
+.newsletter-box {
+    background-color: hsl(var(--bg-secondary));
+    border: 1px solid hsl(var(--border-color));
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.newsletter-box h2 {
+    font-size: 2.5rem;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    /* Serif font for the "Neuron" feel, but using system serif or fallback */
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+.newsletter-box p {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    max-width: 450px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.newsletter-form {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+.newsletter-form input[type="email"] {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border: 1px solid hsl(var(--border-color));
+    background-color: hsl(var(--bg-primary));
+    color: hsl(var(--text-primary));
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.newsletter-form input[type="email"]:focus {
+    border-color: hsl(var(--accent-primary));
+}
+
+.newsletter-form button {
+    background-color: hsl(var(--bg-primary));
+    /* Fallback */
+    background: linear-gradient(135deg, hsl(var(--accent-primary)), hsl(var(--accent-secondary)));
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.newsletter-form button:hover {
+    opacity: 0.9;
+}
