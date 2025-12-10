@@ -130,3 +130,8 @@ function buildPage(filePath) {
   fs.writeFileSync(outputPath, pageHtml);
   console.log(`Generated: ${outputRelativePath}`);
 }
+
+// Start Build
+console.log('Starting build...');
+processDirectory(config.contentPath);
+console.log('Build complete!');
