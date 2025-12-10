@@ -1,49 +1,52 @@
 # Simple Static Site Generator
 
-A lightweight, custom static site generator built with Node.js. It converts Markdown files into a clear, premium-designed HTML website.
+A lightweight, no-framework static site generator built with Node.js.
+
+## Live Demo
+[View Live Site](https://DannyMaliana.github.io/static-site)
 
 ## Features
-- **Markdown Support**: Write your content in simple Markdown.
-- **Modern Design**: Clean, responsive aesthetic using CSS variables and Inter font.
-- **Zero Config**: Just run the build script.
-- **No Heavy Frameworks**: Pure Node.js logic.
+- **Markdown-based Content**: Write your pages and blog posts in Markdown.
+- **Custom Build Script**: No heavy frameworks, just a simple Node.js script (`build.js`).
+- **Templating**: Simple HTML templates for consistent layout.
+- **Blog Support**: Automatic blog post listing and dedicated blog post templates.
+- **Premium Design**: Dark-themed, responsive CSS with Inter font.
 
 ## Project Structure
 ```
 /
-├── build.js          # The generator script
+├── package.json
+├── build.js          # Static site generator script
 ├── src/
-│   ├── content/      # Your Markdown pages
+│   ├── content/      # Markdown files (pages & blog posts)
+│   ├── templates/    # HTML templates (layout.html, blog-post.html)
 │   ├── css/          # Styles
-│   └── templates/    # HTML Layout
-└── public/           # Generated site (do not edit manually)
+│   └── index.html    # Static landing page
+└── public/           # Generated output (Gitignored)
 ```
 
-## How to Use
+## Getting Started
 
-1. **Install Dependencies**
-   ```bash
-   npm install
-   ```
+1.  **Install Dependencies**
+    ```bash
+    npm install
+    ```
 
-2. **Run Build**
-   ```bash
-   node build.js
-   ```
+2.  **Build the Site**
+    ```bash
+    npm run build
+    ```
 
-3. **Preview**
-   You can use any static file server to preview the `public` folder.
-   ```bash
-   npx serve public
-   ```
+3.  **Preview Locally**
+    ```bash
+    npx serve public
+    ```
+
+4.  **Deploy to GitHub Pages**
+    ```bash
+    npm run deploy
+    ```
 
 ## Adding Content
-- Create new `.md` files in `src/content`.
-- Add front matter at the top:
-  ```yaml
-  ---
-  title: My Page Title
-  description: Page description
-  ---
-  ```
-- Subdirectories in `src/content` (like `blog/`) remain as subdirectories in the output.
+- **Pages**: Add `.md` files to `src/content/` (e.g., `services.md`).
+- **Blog Posts**: Add `.md` files to `src/content/blog/`. Front matter must include `date`.

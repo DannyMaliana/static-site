@@ -58,15 +58,17 @@ if (fs.existsSync(blogDir)) {
       const { attributes } = frontMatter(fileContent);
       blogPosts.push({
         ...attributes,
-        url: `/blog/${file.replace('.md', '.html')}`,
+        // Make URL relative for list items (assuming they are viewed from blog/index.html or similar depth, but simpler to use filename relative to blog dir)
+        // Actually, let's keep it filename only, assuming we are listing them on pages where we can adjust or just standardizing.
+        // Let's use strictly relative paths assuming we are on /blog/index.html:
+        url: file.replace('.md', '.html'),
         dateObj: attributes.date ? new Date(attributes.date) : new Date(0)
       });
     }
   });
 }
 
-// Sort by date descending
-blogPosts.sort((a, b) => b.dateObj - a.dateObj);
+// ... (sorting code remains same) ...
 
 // Generate HTML for blog list
 const blogListHtml = `
@@ -83,23 +85,29 @@ const blogListHtml = `
 </div>
 `;
 
-// Start Build
-console.log('Starting build...');
-processDirectory(config.contentPath);
-console.log('Build complete!');
+// ... (build start log) ...
 
 function buildPage(filePath) {
   const fileContent = fs.readFileSync(filePath, 'utf-8');
   const { attributes, body } = frontMatter(fileContent);
   let htmlContent = marked.parse(body);
 
-  // Inject dynamic blog list if placeholder exists (specifically for blog index)
+  // Inject dynamic blog list if placeholder exists
   if (filePath.includes(path.join('src', 'content', 'blog', 'index.md'))) {
     htmlContent = htmlContent.replace('{{ blog_list }}', blogListHtml);
   }
 
+  // Determine output path first to calculate depth
+  const relativeFromContent = path.relative(config.contentPath, filePath);
+  const outputRelativePath = relativeFromContent.replace(/\.md$/, '.html');
+  const outputPath = path.join(config.distPath, outputRelativePath);
+
+  // Calculate root relative path (e.g., "../" or "./")
+  // depth is number of separators in the relative path
+  const depth = outputRelativePath.split(path.sep).length - 1;
+  const root = depth > 0 ? '../'.repeat(depth) : './';
+
   // Select Template
-  // Check if file is in src/content/blog/ AND is not index.md
   const isBlogPost = filePath.includes(path.join('src', 'content', 'blog')) && path.basename(filePath) !== 'index.md';
   const templateToUse = isBlogPost ? blogPostTemplate : layoutTemplate;
 
@@ -109,17 +117,11 @@ function buildPage(filePath) {
 
   // Simple Template Engine
   let pageHtml = templateToUse
+    .replace(/\{\{\s*root\s*\}\}/g, root)
     .replace(/\{\{\s*title\s*\}\}/g, attributes.title || 'My Website')
     .replace(/\{\{\s*description\s*\}\}/g, attributes.description || '')
     .replace(/\{\{\s*date\s*\}\}/g, attributes.date instanceof Date ? attributes.date.toISOString().split('T')[0] : (attributes.date || ''))
     .replace(/\{\{\s*content\s*\}\}/g, htmlContent);
-
-  // Determine output path
-  // Relativize path from src/content to match in public/
-  const relativePath = path.relative(config.contentPath, filePath);
-  // Change extension from .md to .html
-  const outputRelativePath = relativePath.replace(/\.md$/, '.html');
-  const outputPath = path.join(config.distPath, outputRelativePath);
 
   // Ensure subdirectory exists
   fs.ensureDirSync(path.dirname(outputPath));
